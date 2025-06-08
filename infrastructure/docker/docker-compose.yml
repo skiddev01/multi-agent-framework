@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  multi-agent-framework:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - LOG_LEVEL=DEBUG
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+      - ./cache:/app/cache
+    
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:

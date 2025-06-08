@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multi-agent-framework
+  labels:
+    app: multi-agent-framework
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: multi-agent-framework
+  template:
+    metadata:
+      labels:
+        app: multi-agent-framework
+    spec:
+      containers:
+      - name: multi-agent-framework
+        image: ghcr.io/yourusername/multi-agent-framework:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: api-keys
+              key: openai-api-key
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: multi-agent-framework-service
+spec:
+  selector:
+    app: multi-agent-framework
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+  type: LoadBalancer

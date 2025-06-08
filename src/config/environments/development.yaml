@@ -1,0 +1,10 @@
+llm_models:
+  coordinator: gpt-3.5-turbo
+  default: gpt-4-turbo
+  researcher: gpt-4-turbo
+  writer: gpt-4
+log_level: DEBUG
+max_iterations: 5
+monitoring_enabled: true
+name: development
+timeout_seconds: 300

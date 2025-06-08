@@ -1,0 +1,10 @@
+llm_models:
+  coordinator: gpt-4
+  default: gpt-4-turbo
+  researcher: gpt-4-turbo
+  writer: gpt-4-turbo
+log_level: INFO
+max_iterations: 3
+monitoring_enabled: true
+name: production
+timeout_seconds: 180
