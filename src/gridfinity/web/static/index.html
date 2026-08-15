@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gridfinity Assistant</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">▚</span>
+      <div>
+        <h1>Gridfinity Assistant</h1>
+        <p class="tagline">Photo &rarr; grouped items &rarr; printable bins</p>
+      </div>
+    </div>
+    <span id="visionBadge" class="badge badge-muted" title="Vision status">checking…</span>
+  </header>
+
+  <main class="layout">
+    <section class="panel" aria-label="Inputs">
+      <h2>1. Upload a photo</h2>
+      <label id="dropzone" class="dropzone" for="imageInput">
+        <input type="file" id="imageInput" accept="image/*" hidden />
+        <img id="preview" alt="Preview of uploaded photo" hidden />
+        <div id="dropPrompt" class="drop-prompt">
+          <span class="drop-icon" aria-hidden="true">＋</span>
+          <span>Drag a photo here or click to browse</span>
+          <small>Everything you want to store, in one shot</small>
+        </div>
+      </label>
+
+      <h2>2. Your grid size</h2>
+      <p class="hint">Gridfinity cells are 42&nbsp;mm each. Enter how many
+        cells your baseplate is.</p>
+      <div class="grid-inputs">
+        <label>Width (cells across)
+          <input type="number" id="widthUnits" min="1" max="20" value="5" />
+        </label>
+        <label>Depth (cells deep)
+          <input type="number" id="depthUnits" min="1" max="20" value="4" />
+        </label>
+      </div>
+      <label class="checkbox">
+        <input type="checkbox" id="researchToggle" checked />
+        Research printable models online
+      </label>
+
+      <button id="analyzeBtn" class="primary">Analyze &amp; recommend bins</button>
+      <p id="status" class="status" role="status"></p>
+    </section>
+
+    <section class="panel results" aria-label="Results" id="resultsPanel">
+      <div id="emptyState" class="empty">
+        <p>Your recommendations will appear here.</p>
+        <p class="hint">No photo? Run it anyway to see a worked demo.</p>
+      </div>
+      <div id="results" hidden>
+        <div id="notes"></div>
+        <h2>Suggested baseplate layout</h2>
+        <div id="layoutWrap" class="layout-wrap">
+          <canvas id="layoutCanvas" width="480" height="384" aria-label="Grid layout"></canvas>
+          <p id="layoutMeta" class="hint"></p>
+        </div>
+        <h2>Recommended bins</h2>
+        <div id="cards" class="cards"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Bin math uses the Gridfinity standard (42&nbsp;mm cells, 7&nbsp;mm heights). Usable sizes are conservative estimates.</span>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
