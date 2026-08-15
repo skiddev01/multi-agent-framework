@@ -2,6 +2,43 @@
 
 A comprehensive, production-ready framework for building multi-agent AI systems based on the four-level design methodology (Conceptual, Functional, Behavioral, Technical).
 
+## Gridfinity Assistant
+
+A worked example app built on this framework. Upload a photo of the things you
+want to store, tell it how big your grid is, and it groups similar objects,
+sizes the right [Gridfinity](https://gridfinity.xyz) bins, and finds printable
+models to make.
+
+**Pipeline (three coordinated agents):**
+
+1. **Vision agent** — Claude analyzes the photo, identifies objects, estimates
+   their real-world size (mm), and groups similar items.
+2. **Recommender** — deterministic Gridfinity spec math (42 mm cells, 7 mm
+   heights) picks the smallest standard bin that fits each group, then packs
+   the bins onto your baseplate.
+3. **Research agent** — Claude's web search finds real printable models
+   (Printables / MakerWorld / Thingiverse / gridfinity.xyz) per group.
+
+**Run it:**
+
+```bash
+pip install -e .
+export ANTHROPIC_API_KEY=sk-ant-...   # optional — omit for offline demo mode
+gridfinity-web                        # serves http://127.0.0.1:8000
+```
+
+Then open the page, drop in a photo, set your grid size (e.g. `5 x 4` cells),
+and hit **Analyze**. Without an API key the app runs in **demo mode**: the
+Gridfinity math and grid-packing are fully live, and container links fall back
+to search/generator URLs.
+
+Configuration via env vars: `ANTHROPIC_API_KEY`, `GRIDFINITY_VISION_MODEL`,
+`GRIDFINITY_RESEARCH_MODEL`, `GRIDFINITY_HOST`, `GRIDFINITY_PORT`.
+
+The core (`src/gridfinity/spec.py`, `recommender.py`) is offline and fully unit
+tested: `pytest tests/unit/test_gridfinity_*.py`.
+
+
 ## Quick Start
 
 1. **Clone and Setup**
